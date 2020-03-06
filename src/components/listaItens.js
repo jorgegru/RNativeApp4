@@ -1,29 +1,31 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import Itens from './Itens';
+import axios from 'react-native-axios';
 
 export default class ListaItens extends Component {
 
   constructor(props){
     super(props);
 
-    console.log('Contruindo a aplicacao');
   }
 
   componentWillMount() {
+    //requisiçao http
+    // http://faus.com.br/recursos/c/dmairr/api/itens.html
 
-    console.log('WILL');
+    axios.get('http://faus.com.br/recursos/c/dmairr/api/itens.html')
+      .then( responde => {
+        console.log(responde);
+      }).catch( () => console.log('Erro ao recuperar dados') );
   }
-
-  componentDidMount() {
-    console.log('Did');
-  }
-
 
   render() {
-    console.log('render');
     return (
-      <View style={styles.container}>
-        <Text>Open up dsdsApp.js to dsdsdstart working on your app!</Text>
+      <View>
+        <Itens />
+        <Itens />
+        <Itens />
       </View>
     );
   }
