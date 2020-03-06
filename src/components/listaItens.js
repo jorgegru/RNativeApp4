@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import Itens from './Itens';
 import axios from 'react-native-axios';
 
@@ -8,24 +8,22 @@ export default class ListaItens extends Component {
   constructor(props){
     super(props);
 
+    this.state = { listaItens: [] };
   }
 
   componentWillMount() {
     //requisiçao http
-    // http://faus.com.br/recursos/c/dmairr/api/itens.html
-
     axios.get('http://faus.com.br/recursos/c/dmairr/api/itens.html')
-      .then( responde => {
-        console.log(responde);
-      }).catch( () => console.log('Erro ao recuperar dados') );
+      .then( responde => this.setState({ listaItens: responde.data }) )
+      .catch( () => console.log('Erro ao recuperar dados') );
   }
 
   render() {
     return (
       <View>
-        <Itens />
-        <Itens />
-        <Itens />
+        { this.state.listaItens.map( (item, i) => 
+            <Text key={i} >{ item.titulo }</Text>
+        ) }
       </View>
     );
   }
